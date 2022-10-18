@@ -1,3 +1,13 @@
 from django.db import models
 
-# Create your models here.
+
+class RegisteredComplaints(models.Model):
+    pass
+
+
+class Violations(models.Model):
+    pass
+
+
+class ViolationLogs(models.Model):
+    pass
