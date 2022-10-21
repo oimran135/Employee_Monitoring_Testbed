@@ -29,3 +29,6 @@ It will install all the required libraries and dependencies for your django proj
 # Installing new libraries and dependencies
 If you have install a new library using pip or any other installer package. Make sure to add it in requirements.txt
 please don't use pip freeze as it will add the versions too, and this can cause conflicts in the future releases.
+
+Currently constructing a notebook with all relevant activities being trained for Image Processing (CV) through LSTM:
+https://colab.research.google.com/drive/1dBCCA3deYTsxv9_pycTj_0KLUMv8LUqC?usp=sharing
