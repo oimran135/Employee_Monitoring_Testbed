@@ -19,5 +19,7 @@ tomli
 typing-extensions
 whitenoise=6.2.0
 zipp
-
-
+face_recognition
+numpy
+opencv-python
+tkinter
