@@ -1,5 +1,10 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+
+#load .env file from dir
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -8,10 +13,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-g3y$brc1p(_em&63_6faar=0@^ul-7bs=^o$&8goo6f0r8dsm-")
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", True)
 
 ALLOWED_HOSTS = []
 
@@ -30,7 +35,7 @@ INSTALLED_APPS = [
     'apps.authentication',
     'apps.attendance',
     'apps.violations',
-    'apps.metrics',
+    'apps.emp_metrics',
 
 ]
 
@@ -71,9 +76,9 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv("NAME", 'EmployeeMonitoring'),
-        'USER': os.getenv("USER", 'oimran'),
-        'PASSWORD': os.getenv("PASSWORD", 'oimran!#5'),
+        'NAME': os.getenv("NAME"),
+        'USER': os.getenv("USER"),
+        'PASSWORD': os.getenv("PASSWORD"),
         'HOST': os.getenv("HOST", 'localhost'),
         'PORT': os.getenv("PORT", 5432)
     }
