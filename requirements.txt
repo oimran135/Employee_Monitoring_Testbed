@@ -23,7 +23,6 @@ zipp
 face_recognition
 numpy
 opencv-python
-tkinter
 torch
 torchvision
 pytorchvideo

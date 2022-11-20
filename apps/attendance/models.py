@@ -1,6 +1,7 @@
 from django.db import models
 from apps.authentication.models import User
 
+
 class Attendance(models.Model):
     emp_id = models.ForeignKey(User, on_delete=models.CASCADE)
     date_today = models.DateField(auto_now_add=True)
