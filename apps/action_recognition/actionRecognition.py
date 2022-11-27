@@ -19,7 +19,7 @@ class factoryActionRecognition:
     def __init__(self):
         self.transform = None
         self.clip_duration = None
-        self.FramesToProcess = 0
+        self.FramesToProcess = 300
         self.inputs = None
         self.video_path = 'output.mp4'
         self.kinetics_id_to_classname = None
@@ -29,7 +29,8 @@ class factoryActionRecognition:
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.model = self.model.eval()
         self.model = self.model.to(self.device)
-
+    def setTime(self, time):
+        self.FramesToProcess = 45 * time # setting it to 45 because the input video is set to 45 fps.
     def InitializeClassNames(self):
         json_filename = f"apps/action_recognition/working_classes.json"
         with open(json_filename, "r") as f:
@@ -101,7 +102,7 @@ class factoryActionRecognition:
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
         out = cv2.VideoWriter(self.video_path, fourcc, 45.0, (640, 480))
         numberOfFrames = 0
-        self.FramesToProcess = 300  # change this value for a higher length video input
+        #self.FramesToProcess = 300  # change this value for a higher length video input
         print("Recording video.")
         # loop runs if capturing has been initialized.
         while True:
@@ -159,16 +160,16 @@ class factoryActionRecognition:
         pred_class_names = [self.kinetics_id_to_classname[int(i)] for i in pred_classes]
         return pred_class_names
 
-from actionRecognition import factoryActionRecognition
+#from actionRecognition import factoryActionRecognition
 
 
-def main():
-    actionRecognition = factoryActionRecognition()
-    actionRecognition.InitializeClassNames()
-    actionRecognition.Processing()
-    actionRecognition.recordVideo()
-    print(actionRecognition.predictActions())
+#def main():
+ #   actionRecognition = factoryActionRecognition()
+ #   actionRecognition.InitializeClassNames()
+ #   actionRecognition.Processing()
+ #   actionRecognition.recordVideo()
+ #   print(actionRecognition.predictActions())
 
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+ #   main()

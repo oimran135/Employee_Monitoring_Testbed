@@ -4,11 +4,9 @@ import cv2
 import pickle
 import time
 
-
-
 class faceRecognition:
     def __init__(self):
-        self.KNOWN_FACES_DIR = "apps/face_recognition/known_faces"
+        self.KNOWN_FACES_DIR = "D:/Final Year Project/Employee_Monitoring_Testbed/apps/faces_recognition/known_faces"
         self.FaceRecognitionTolerance = 0.5
         self.FRAME_THICKNESS = 3
         self.FONT_THICKNESS = 2
@@ -26,6 +24,9 @@ class faceRecognition:
         self.dictionaryOutput = {}
         self.result = None
         self.next_id = 0
+
+    def setTime(self, time):
+        self.FramesToProcess = 30 * time
     def loadKnownFaces(self):
         for name in os.listdir(self.KNOWN_FACES_DIR):
             for filename in os.listdir(f"{self.KNOWN_FACES_DIR}/{name}"):
@@ -35,11 +36,11 @@ class faceRecognition:
                 self.known_ids.append(int(temp_id))
                 temp_name = filename.split('-')[1].split('--')[0] # get the name of the individual from the file
                 self.known_names.append(temp_name)
-                self.result = cv2.VideoWriter('filename.avi', cv2.VideoWriter_fourcc(*'MJPG'), 60, (640, 480))
-                if len(self.known_ids) > 0:
-                    self.next_id = max(self.known_ids) + 1
-                else:
-                    self.next_id = 0
+             #   self.result = cv2.VideoWriter('filename.avi', cv2.VideoWriter_fourcc(*'MJPG'), 60, (640, 480))
+        if len(self.known_ids) > 0:
+            self.next_id = max(self.known_ids) + 1
+        else:
+            self.next_id = 0
         
 
     def processVideo(self):
@@ -68,14 +69,13 @@ class faceRecognition:
                     self.ids_found.append(match)
                     self.names_found.append(matchName)
                 else:
-                    if results.count(False) >= 2:
-                        match = str(next_id)
-                        next_id += 1
-                        self.known_ids.append(match)
-                        self.known_faces.append(face_encoding)
-                        os.mkdir(f"{self.KNOWN_FACES_DIR}/{match}-{self.newFaceName}")
-                        pickle.dump(face_encoding, open(f"{self.KNOWN_FACES_DIR}/{match}-{self.newFaceName}/{match}-{self.newFaceName}--{int(time.time())}.pkl", "wb"))
-                
+                    match = str(self.next_id)
+                    self.next_id += 1
+                    self.known_ids.append(match)
+                    self.known_faces.append(face_encoding)
+                    os.mkdir(f"{self.KNOWN_FACES_DIR}/{match}-{self.newFaceName}")
+                    pickle.dump(face_encoding, open(f"{self.KNOWN_FACES_DIR}/{match}-{self.newFaceName}/{match}-{self.newFaceName}--{int(time.time())}.pkl", "wb"))
+            
                 top_left = (face_location[3], face_location[0])
                 bottom_right = (face_location[1], face_location[2])
                 color = [0, 255, 0]
@@ -86,7 +86,7 @@ class faceRecognition:
                 cv2.rectangle(image, top_left, bottom_right, color, cv2.FILLED)
                 cv2.putText(image, str(match)+ ":"+matchName, (face_location[3]+10, face_location[2]+15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200,200,200))
                 #  cv2.imwrite(f"{KNOWN_FACES_DIR}/{match}/{match}.png", image) # The intention here was to save the face of the person as well, but that doesn't bode well with pickle
-            self.result.write(image)
+           # self.result.write(image)
             self.dictionaryOutput = dict(zip(self.ids_found, self.names_found))
         return self.dictionaryOutput
 
