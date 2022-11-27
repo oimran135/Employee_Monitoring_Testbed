@@ -1,10 +1,6 @@
 import torch
-import numpy as np
 import cv2
-import os
-from typing import Dict
 import json
-import urllib
 from torchvision.transforms import Compose, Lambda
 from torchvision.transforms._transforms_video import (
     CenterCropVideo,
@@ -35,12 +31,7 @@ class factoryActionRecognition:
         self.model = self.model.to(self.device)
 
     def InitializeClassNames(self):
-        json_url = "https://dl.fbaipublicfiles.com/pyslowfast/dataset/class_names/kinetics_classnames.json"
-        json_filename = "kinetics_classnames.json"
-        try:
-            urllib.URLopener().retrieve(json_url, json_filename)
-        except:
-            urllib.request.urlretrieve(json_url, json_filename)
+        json_filename = f"apps/action_recognition/working_classes.json"
         with open(json_filename, "r") as f:
             kinetics_classnames = json.load(f)
 
@@ -48,7 +39,8 @@ class factoryActionRecognition:
         self.kinetics_id_to_classname = {}
         for k, v in kinetics_classnames.items():
             self.kinetics_id_to_classname[v] = str(k).replace('"', "")
-
+    def setOutputVideoName(self, name):
+        self.video_path = name
     def Processing(self):
         side_size = 256
         mean = [0.45, 0.45, 0.45]
@@ -106,8 +98,8 @@ class factoryActionRecognition:
         cap = cv2.VideoCapture(0)
 
         # Define the codec and create VideoWriter object
-        fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        out = cv2.VideoWriter(self.video_path, fourcc, 20.0, (640, 480))
+        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+        out = cv2.VideoWriter(self.video_path, fourcc, 45.0, (640, 480))
         numberOfFrames = 0
         self.FramesToProcess = 300  # change this value for a higher length video input
         print("Recording video.")

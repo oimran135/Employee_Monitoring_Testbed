@@ -130,3 +130,7 @@ dmypy.json
 
 # Meida and images
 media/
+
+filename.avi
+
+output.mp4

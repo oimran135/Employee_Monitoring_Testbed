@@ -1,5 +1,3 @@
-import random
-
 import cv2
 from simple_facerec import SimpleFacerec
 import tkinter as tk
@@ -20,6 +18,9 @@ class FactoryFaceRecognition:
     def loadCamera(self):
         self.cap = cv2.VideoCapture(0)
 
+    def loadData(self, videoName):
+        self.cap = cv2.VideoCapture(videoName)
+
     def checkForFace(self):
         ret, frame = self.cap.read()
         # Detect Faces
@@ -28,11 +29,11 @@ class FactoryFaceRecognition:
         self.numberOfPeopleInFrame = len(face_names)
 
         for face_loc, name in zip(face_locations, face_names):
-            if name is "Unknown" or name is "unknown":
+            if name == "Unknown" or name == "unknown":
                 name = "Unknown Individual"
                 cv2.imwrite("images/" + name + ".png", frame)
                 self.sfr.load_encoding_images(self.imagesPath)
-            # y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]
+                y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3] # location of the face
             # cv2.imshow("Frame", frame)
             self.userName.append(name)
             # self.removeCamera()
@@ -79,12 +80,12 @@ def main():
     found_face = []
 
     faceRecognition = FactoryFaceRecognition()
-    faceRecognition.loadCamera()
+    faceRecognition.loadData(f"output.mp4")
     print("Looking for people!")
     #    while faceRecognition.checkPersonName() == "":
     #        found_face.append(faceRecognition.checkForFace())
     userInput = 'X'
-    while userInput is not 'Q' or userInput is not 'q':
+    while userInput != 'Q' or userInput != 'q':
         faceRecognition.checkForFace()
         if faceRecognition.numberOfPeopleInFrame > 0:
             print(faceRecognition.checkPeopleInFrame())
