@@ -96,7 +96,7 @@ class factoryActionRecognition:
 
     def recordVideo(self):
         # This will return video from the first webcam on your computer.
-        cap = cv2.VideoCapture(0)
+        cap = cv2.VideoCapture(1) # changing to 1 for external camera.
 
         # Define the codec and create VideoWriter object
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
