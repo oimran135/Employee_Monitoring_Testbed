@@ -67,3 +67,11 @@ class PasswordSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('password', 'new_password',)
+
+
+class ImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('image',)
+

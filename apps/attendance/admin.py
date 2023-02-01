@@ -1,3 +1,11 @@
 from django.contrib import admin
+from .models import (
+    Announcements,
+    Attendance,
+    PaidLeaves,
+)
 
-# Register your models here.
+
+admin.site.register(Attendance)
+admin.site.register(Announcements)
+admin.site.register(PaidLeaves)

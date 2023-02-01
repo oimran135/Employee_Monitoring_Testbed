@@ -9,6 +9,7 @@ from .serializers import (
     LoginSerializer,
     UserSerializer,
     PasswordSerializer,
+    ImageSerializer,
 )
 from .utils import logout_user
 
@@ -106,3 +107,14 @@ class AdminUsersView(APIView):
 
     # def delete(self, request, pk):
     #     queryset = User.objects.get(pk=pk)
+
+
+class ImageAddView(APIView):
+
+    def patch(self, request, pk=None):
+        queryset = User.objects.get(pk=request.user.id)
+        serializer = ImageSerializer(queryset, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)

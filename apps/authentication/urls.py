@@ -10,6 +10,7 @@ from .views import (
     UserView,
     UpdatePasswordView,
     AdminUsersView,
+    ImageAddView
 )
 
 from rest_framework_simplejwt.views import (
@@ -29,4 +30,5 @@ urlpatterns = [
     path('profile/', UserView.as_view(), name='user_details'),
     path('reset/', UpdatePasswordView.as_view(), name='user_password'),
     path('all/', AdminUsersView.as_view(), name='admin-users-all'),
+    path('image/add/', ImageAddView.as_view(), name='user-image-patch')
 ]

@@ -1,4 +1,4 @@
-from datetime import datetime
+from django.utils import timezone
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -45,9 +45,6 @@ class CheckoutView(APIView):
 
     def patch(self, request, pk=None):
         queryset = Attendance.objects.get(pk=pk)
-        serializer = AttendanceSerializer(queryset, data=request.data, partial=True)
-        serializer.data['check_out'] = datetime.now
-        if serializer.is_valid():
-                serializer.save()
-                return Response(status=status.HTTP_201_CREATED)
-        return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        queryset.check_out = timezone.now()
+        queryset.save()
+        return Response(status=status.HTTP_201_CREATED)
