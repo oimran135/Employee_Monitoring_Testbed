@@ -8,18 +8,29 @@ class RegisteredComplaints(models.Model):
                            ("In-Progress", "In-Progress"),
                            ("Closed", "Closed"))
 
-    registered_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    registered_against =  models.ForeignKey(User, on_delete=models.CASCADE)
-    complaint_date = models.DateField()
-    case_status = models.CharField(max_lenght=20, choices=case_status_choices)
-    negative_score = models.FloatField()
+    registered_by = models.ForeignKey(
+        User, null=True, blank=True, on_delete=models.CASCADE)
+    registered_against = models.ForeignKey(
+        User, null=True, blank=True, on_delete=models.CASCADE, related_name='user_object_set')
+    complaint_date = models.DateField(null=True, blank=True)
+    case_status = models.CharField(
+        max_length=20, choices=case_status_choices, null=True, blank=True)
+    negative_score = models.FloatField(null=True, blank=True,)
+    comments = models.TextField(null=True, blank=True)
 
 
 class Violations(models.Model):
-    name = models.CharField(max_length=30)
-    desc = models.TextField()
+    name = models.CharField(max_length=30, null=True, blank=True,)
+    desc = models.TextField(null=True, blank=True)
+    neg_score = models.IntegerField(default=0)
 
 
 class ViolationLogs(models.Model):
-    employee = models.ForeignKey(User, on_delete=models.CASCADE)
-    violation = models.ForeignKey(Violations, on_delete=models.CASCADE)
+    employee = models.ForeignKey(
+        User, null=True, blank=True, on_delete=models.CASCADE)
+    registered_by = models.ForeignKey(
+        User, null=True, blank=True, on_delete=models.CASCADE, related_name='admin-registerar+')
+    violation = models.ForeignKey(
+        Violations, null=True, blank=True, on_delete=models.CASCADE)
+    violation_date = models.DateField(null=True, blank=True)
+    comments = models.TextField(null=True, blank=True)
