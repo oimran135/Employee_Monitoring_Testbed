@@ -1,24 +1,9 @@
 from rest_framework import serializers
 from django.contrib import auth
 from rest_framework.exceptions import AuthenticationFailed
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import (
     User,
 )
-
-
-class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
-
-    @classmethod
-    def get_token(cls, user: User):
-        token = super().get_token(user)
-        token['id'] = "60960513b96bb87e4849010f"
-        token['name'] = "admin"
-        token['email'] = "admin@freefindz.com"
-        token["role"] = "admin"
-        token["iat"] = 1675193664
-
-        return token
 
 
 class RegisterSerializer(serializers.ModelSerializer):

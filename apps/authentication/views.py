@@ -5,7 +5,6 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from drf_yasg.utils import swagger_auto_schema
 from .models import User
 from .serializers import (
-    CustomTokenObtainPairSerializer,
     RegisterSerializer,
     LoginSerializer,
     UserSerializer,
@@ -13,9 +12,6 @@ from .serializers import (
 )
 from .utils import logout_user
 
-
-class CustomTokenObtainPairView(TokenObtainPairView):
-    serializer_class = CustomTokenObtainPairSerializer
 
 class RegisterView(APIView):
 
@@ -110,5 +106,3 @@ class AdminUsersView(APIView):
 
     # def delete(self, request, pk):
     #     queryset = User.objects.get(pk=pk)
-
-
