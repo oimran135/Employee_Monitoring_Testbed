@@ -7,7 +7,7 @@ import time
 
 class faceRecognition:
     def __init__(self):
-        self.KNOWN_FACES_DIR = "D:/Final Year Project/Employee_Monitoring_Testbed/apps/faces_recognition/known_faces"
+        self.KNOWN_FACES_DIR = "D:/Final Year Project/Employee_Monitoring_Testbed/apps/media/images/Users/"
         self.FaceRecognitionTolerance = 0.5
         self.FRAME_THICKNESS = 3
         self.FONT_THICKNESS = 2

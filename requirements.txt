@@ -2,10 +2,12 @@ asgiref
 backports.zoneinfo
 black==22.8.0
 click
+cmake
 Django==4.1
 djangorestframework==3.13.1
 djangorestframework-simplejwt==5.2.1
 drf-yasg
+face_recognition
 importlib-metadata
 Markdown
 mypy-extensions
@@ -19,4 +21,10 @@ sqlparse
 tomli
 typing-extensions
 whitenoise==6.2.0
-
+zipp
+numpy
+opencv-python
+torch
+torchvision
+pytorchvideo
+django-cors-headers
