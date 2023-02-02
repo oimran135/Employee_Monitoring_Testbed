@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework import viewsets
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework import status
 from .models import (
     RegisteredComplaints,
     Violations,
@@ -58,7 +59,9 @@ class ViolationsViewset(viewsets.ModelViewSet):
 
 class ViolationByTagView(APIView):
 
-    def get(self):
-        queryset = Violations.objects.get(tag=self.request.tag)
-        serializer = ViolationsSerializer(queryset)
-        return Response(serializer.data)
+    def get(self, request, tag):
+        try:
+            queryset = Violations.objects.get(tag=tag)
+        except Violations.DoesNotExist:
+            return Response({'error': 'Violation not found'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'violation_id': queryset.id})
