@@ -10,9 +10,8 @@ from .models import (
 from .serializers import (
     ComplaintsSerializer,
     UserViolationsSerializer,
+    ViolationsSerializer,
 )
-
-# At the admin level
 
 
 class ComplaintsViewSet(viewsets.ModelViewSet):
@@ -32,7 +31,7 @@ class ComplaintsViewSet(viewsets.ModelViewSet):
         return [permission() for permission in permission_classes]
 
 
-class ViolationsViewSet(viewsets.ModelViewSet):
+class ViolationsLogsViewSet(viewsets.ModelViewSet):
 
     serializer_class = UserViolationsSerializer
 
@@ -48,3 +47,9 @@ class ViolationsViewSet(viewsets.ModelViewSet):
         else:
             permission_classes = [IsAuthenticated]
         return [permission() for permission in permission_classes]
+
+
+class ViolationsViewset(viewsets.ModelViewSet):
+    serializer_class = ViolationsSerializer
+    queryset = Violations.objects.all()
+    permission_classes = [IsAdminUser]

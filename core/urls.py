@@ -43,6 +43,7 @@ urlpatterns = [
     path("user/", include("apps.authentication.urls")),
     path("behavior/", include("apps.violations.urls")),
     path("live-API/", include("apps.attendance.urls")),
+    path("performance/", include("apps.emp_metrics.urls")),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

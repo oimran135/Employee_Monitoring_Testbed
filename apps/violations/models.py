@@ -22,6 +22,7 @@ class RegisteredComplaints(models.Model):
 class Violations(models.Model):
     name = models.CharField(max_length=30, null=True, blank=True,)
     desc = models.TextField(null=True, blank=True)
+    tag = models.IntegerField(default=0)
     neg_score = models.IntegerField(default=0)
 
 

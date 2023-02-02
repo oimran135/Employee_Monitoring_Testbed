@@ -23,6 +23,7 @@ class ViolationsSerializer(ModelSerializer):\
 class UserViolationsSerializer(ModelSerializer):
     registered_by = UserSerializer()
     violation = ViolationsSerializer()
+    employee = UserSerializer()
 
     class Meta:
         model = ViolationLogs
