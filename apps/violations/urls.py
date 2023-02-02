@@ -4,6 +4,7 @@ from .views import (
     ComplaintsViewSet,
     ViolationsLogsViewSet,
     ViolationsViewset,
+    ViolationByTagView,
 )
 
 
@@ -16,4 +17,6 @@ router.register(r'violations', ViolationsViewset, basename='core-violations')
 
 urlpatterns = [
     path('api1/', include(router.urls)),
+    path('api1/violation/<int:tag>',
+         ViolationByTagView.as_view(), name='violation-object'),
 ]

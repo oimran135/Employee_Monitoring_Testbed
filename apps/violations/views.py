@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework import viewsets
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.response import Response
 from .models import (
     RegisteredComplaints,
     Violations,
@@ -53,3 +54,11 @@ class ViolationsViewset(viewsets.ModelViewSet):
     serializer_class = ViolationsSerializer
     queryset = Violations.objects.all()
     permission_classes = [IsAdminUser]
+
+
+class ViolationByTagView(APIView):
+
+    def get(self):
+        queryset = Violations.objects.get(tag=self.request.tag)
+        serializer = ViolationsSerializer(queryset)
+        return Response(serializer.data)

@@ -14,6 +14,9 @@ class PerformanceMetrics(models.Model):
     # for future application
     dependability = models.IntegerField(default=0)
 
+    def __str__(self):
+        return self.employee
+
 
 class EmployeeOfTheMonth(models.Model):
     emp_id = models.ForeignKey(User, on_delete=models.CASCADE)
